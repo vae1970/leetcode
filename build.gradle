@@ -18,8 +18,8 @@ apply plugin: 'io.spring.dependency-management'
 idea {
     module {
         inheritOutputDirs = false
-        outputDir = file("/dev/shm/apiManager/main/")
-        testOutputDir = file("/dev/shm/apiManager/test/")
+        outputDir = file("/dev/shm/leetcode/main/")
+        testOutputDir = file("/dev/shm/leetcode/test/")
     }
 }
 
