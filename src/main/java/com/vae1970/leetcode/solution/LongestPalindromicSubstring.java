@@ -8,41 +8,40 @@ package com.vae1970.leetcode.solution;
 public class LongestPalindromicSubstring {
 
     public static String longestPalindrome(String s) {
-        int tempLeft, tempRight, pointerLeft = 0, pointerRight = 0;
+        int tempLeft, tempRight, previous, next;
+        int pointerLeft = 0, pointerRight = 0;
         int length = s.length(), max = length - 1;
+        boolean rightEqual, leftAndRightEqual;
         if (length > 1) {
-            if (s.charAt(0) == s.charAt(1)) {
-                pointerRight = 1;
-            }
-            if (length > 2) {
-                for (int i = 1; i < max; i++) {
-                    int previous = i - 1;
-                    int next = i + 1;
-                    boolean rightEqual = s.charAt(i) == s.charAt(next);
-                    boolean leftAndRightEqual = s.charAt(previous) == s.charAt(next);
-                    while (rightEqual || leftAndRightEqual) {
-                        if (rightEqual) {
-                            tempLeft = i;
-                            tempRight = next;
-                            rightEqual = false;
-                        } else {
-                            tempLeft = previous;
-                            tempRight = next;
-                            leftAndRightEqual = false;
+            for (int i = 0; i < max; i++) {
+                previous = i - 1;
+                next = i + 1;
+                //  把当前值和右侧值比较是否相等
+                rightEqual = s.charAt(i) == s.charAt(next);
+                //  把左右两侧的值比较是否相等
+                leftAndRightEqual = previous >= 0 && s.charAt(previous) == s.charAt(next);
+                while (rightEqual || leftAndRightEqual) {
+                    if (rightEqual) {
+                        tempLeft = i;
+                        tempRight = next;
+                        rightEqual = false;
+                    } else {
+                        tempLeft = previous;
+                        tempRight = next;
+                        leftAndRightEqual = false;
+                    }
+                    for (; tempLeft > 0 && tempRight < max; ) {
+                        tempLeft--;
+                        tempRight++;
+                        if (s.charAt(tempLeft) != s.charAt(tempRight)) {
+                            tempLeft++;
+                            tempRight--;
+                            break;
                         }
-                        for (; tempLeft > 0 && tempRight < max; ) {
-                            tempLeft--;
-                            tempRight++;
-                            if (s.charAt(tempLeft) != s.charAt(tempRight)) {
-                                tempLeft++;
-                                tempRight--;
-                                break;
-                            }
-                        }
-                        if ((tempRight - tempLeft) - (pointerRight - pointerLeft) > 0) {
-                            pointerLeft = tempLeft;
-                            pointerRight = tempRight;
-                        }
+                    }
+                    if ((tempRight - tempLeft) > (pointerRight - pointerLeft)) {
+                        pointerLeft = tempLeft;
+                        pointerRight = tempRight;
                     }
                 }
             }
@@ -56,7 +55,8 @@ public class LongestPalindromicSubstring {
         System.out.println(longestPalindrome("aba"));
         System.out.println(longestPalindrome("aaaa"));
         System.out.println(longestPalindrome("aaa"));
-        System.out.println(longestPalindrome("aa"));
+        System.out.println(longestPalindrome("caa"));
+        System.out.println(longestPalindrome("bananas"));
     }
 
 }
