@@ -13,41 +13,20 @@ public class MyPow {
         System.out.println(myPow(2.00000, -2));
         System.out.println(myPow(1.00001, 123456));
         System.out.println(myPow(0.00001, 2147483647));
-        System.out.println(6&1);
+        System.out.println(6 & 1);
+        System.out.println(-2 / 2);
     }
 
-//    public static double myPow(double x, int n) {
-//        if (n == 0) {
-//            return 1;
-//        } else if (n > 0) {
-//            return myPowPositive(x, n);
-//        } else {
-//            return 1 / myPowPositive(x, -n);
-//        }
-//    }
-
     public static double myPow(double x, int n) {
-        double res = 1.0;
-        for(int i = n; i != 0; i /= 2){
-            if(i % 2 != 0){
-                res *= x;
+        double pow = 1;
+        boolean positive = n > 0;
+        for (; n != 0; n /= 2) {
+            if (n % 2 != 0) {
+                pow *= x;
             }
             x *= x;
         }
-        return  n < 0 ? 1 / res : res;
+        return positive ? pow : 1 / pow;
     }
-
-    public static double myPowPositive(double x, int n) {
-        double doubleTemp = x * x;
-        double result = 1;
-        for (int i = 0, im = n / 2; i < im; i++) {
-            result *= doubleTemp;
-        }
-        if (n % 2 == 1) {
-            result *= x;
-        }
-        return result;
-    }
-
 
 }
