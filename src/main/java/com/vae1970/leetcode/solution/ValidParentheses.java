@@ -22,23 +22,44 @@ public class ValidParentheses {
         if (s.equals("")) {
             return true;
         }
-        if (s.length() % 2 == 1) {
-            return false;
-        }
-        int size = 0, start = 0;
-        for (int i = 0; i < s.length() - 1; i++) {
-            if (equal(s.charAt(i), s.charAt(i + 1))) {
-                size = i - start + 1;
-                for (int j = i + 1, jm = i + size + 1; j < jm; j++) {
-                    if (!equal(s.charAt(i--), s.charAt(j))) {
-                        return false;
-                    }
+        Integer next;
+        int length = 0;
+        boolean[] bucket = new boolean[s.length()];
+        for (int i = 0; i < s.length(); ) {
+            if (!bucket[i]) {
+                next = getNext(i, bucket);
+                if (next != null && equal(s.charAt(i), s.charAt(next))) {
+                    bucket[i] = true;
+                    bucket[next] = true;
+                    length += 2;
+                    i = getPrevious(i, bucket);
+                } else {
+                    i++;
                 }
-                i = start + size * 2 - 1;
-                start = i + 1;
+            } else {
+                i++;
             }
         }
-        return size > 0;
+        return s.length() == length;
+    }
+
+    public static Integer getPrevious(Integer index, boolean[] bucket) {
+        while (--index >= 0) {
+            if (!bucket[index]) {
+                return index;
+            }
+        }
+        index = getNext(index, bucket);
+        return index == null ? 0 : index;
+    }
+
+    public static Integer getNext(int index, boolean[] bucket) {
+        while (++index < bucket.length) {
+            if (!bucket[index]) {
+                return index;
+            }
+        }
+        return null;
     }
 
     public static boolean equal(char a, char b) {
