@@ -1,5 +1,7 @@
 package com.vae1970.leetcode.solution;
 
+import java.util.Arrays;
+
 /**
  * Remove Duplicates from Sorted Array
  *
@@ -20,24 +22,18 @@ public class RemoveDuplicatesFromSortedArray {
         if (nums.length <= 1) {
             return nums.length;
         }
-        int i = 0, j;
-        int length = 0;
-        while (i < nums.length - 1) {
-            j = i + 1;
+        int i = 0, temp, length = 0, im = nums.length - 1;
+        while (i < im) {
             nums[length++] = nums[i];
-            if (nums[i] == nums[j]) {
-                for (j++; j < nums.length; j++) {
-                    if (nums[i] != nums[j]) {
-                        break;
-                    }
+            temp = nums[i];
+            for (i++; i < im; i++) {
+                if (temp != nums[i]) {
+                    break;
                 }
-                i = j;
-            } else {
-                i++;
             }
         }
-        if (nums[nums.length - 2] != nums[nums.length - 1]) {
-            nums[length++] = nums[nums.length - 1];
+        if (nums[nums.length - 2] != nums[im]) {
+            nums[length++] = nums[im];
         }
         return length;
     }
