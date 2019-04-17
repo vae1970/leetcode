@@ -51,17 +51,24 @@ public class ThreeSum {
                 zero = false;
             }
         }
+        int firstMax = Integer.MIN_VALUE;
+        int firstMaxIndex = 0;
+        int lastMin = Integer.MAX_VALUE;
+        int lastMinIndex = 0;
         for (int i = 1; i < nums.length; i++) {
             //  去重和记录重复的数字
             if (temp != nums[i]) {
                 temp = nums[i];
+                if (temp > 0 && temp < lastMin) {
+                    lastMin = temp;
+                    lastMinIndex = i;
+                } else if (temp < 0 && temp > firstMax) {
+                    firstMax = temp;
+                    firstMaxIndex = i;
+                }
                 nums[length++] = temp;
             } else {
-                if (repeatLength > 0) {
-                    if (temp != repeat[repeatLength - 1]) {
-                        repeat[repeatLength++] = temp;
-                    }
-                } else {
+                if (repeatLength == 0 || temp != repeat[repeatLength - 1]) {
                     repeat[repeatLength++] = temp;
                 }
             }
@@ -74,14 +81,14 @@ public class ThreeSum {
                 }
             }
         }
-        for (int i = 0; i < length; i++) {
+        for (int i = 0; i < firstMaxIndex; i++) {
             if (nums[i] > 0) {
                 break;
             }
             for (int j = i + 1; j < length; j++) {
-                for (int k = j + 1; k < length; k++) {
+                for (int k = j + 1; k < lastMinIndex; k++) {
                     if (nums[k] < 0) {
-                        break;
+                        continue;
                     }
                     temp = nums[i] + nums[j] + nums[k];
                     if (temp == 0) {
