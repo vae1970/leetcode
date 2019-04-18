@@ -26,6 +26,12 @@ public class ThreeSum {
         System.out.println(threeSum(new int[]{6, -5, -6, -1, -2, 8, -1, 4, -10, -8, -10, -2, -4, -1, -8, -2, 8, 9, -5, -2, -8, -9, -3, -5}));
     }
 
+    /**
+     * log time
+     *
+     * @param nums array
+     * @return list
+     */
     public static List<List<Integer>> newThreeSum(int[] nums) {
         long start = System.currentTimeMillis();
         List<List<Integer>> lists = threeSum(nums);
