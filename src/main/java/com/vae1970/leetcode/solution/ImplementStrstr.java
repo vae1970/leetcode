@@ -8,36 +8,43 @@ package com.vae1970.leetcode.solution;
 public class ImplementStrstr {
 
     public static void main(String[] args) {
-        System.out.println(strStr("hello", "ll"));
-        System.out.println(strStr("aaaaa", "bba"));
-        System.out.println(strStr("aaaaa", ""));
-        System.out.println(strStr("", "bba"));
-        System.out.println(strStr("a", "a"));
-        System.out.println(strStr("aaa", "aaaa"));
-        System.out.println(strStr("mississippi", "issip"));
+        System.out.println(strStr("hello", "ll") == 2);
+        System.out.println(strStr("aaaaa", "bba") == -1);
+        System.out.println(strStr("aaaaa", "") == 0);
+        System.out.println(strStr("", "bba") == -1);
+        System.out.println(strStr("a", "a") == 0);
+        System.out.println(strStr("aaa", "aaaa") == -1);
+        System.out.println(strStr("mississippi", "issip") == 4);
+        System.out.println(strStr("mississippi", "pi") == 9);
     }
 
+    /**
+     * strStr
+     *
+     * @param haystack haystack
+     * @param needle   needle
+     * @return
+     * @deprecated 还有优化的空间
+     */
+    @Deprecated
     public static int strStr(String haystack, String needle) {
-        int length = 0, index = -1;
+        int index = 0, length = 0;
         for (int i = 0; i < haystack.length(); i++) {
-            if (length < needle.length()) {
-                if (haystack.charAt(i) == needle.charAt(length)) {
+            index = i;
+            while (i < haystack.length()) {
+                if (length == needle.length()) {
+                    return index;
+                } else if (haystack.charAt(i) == needle.charAt(length)) {
                     length++;
+                    i++;
                 } else {
                     length = 0;
+                    i = index;
+                    break;
                 }
-            } else if (length == needle.length()) {
-                index = i - length;
-                break;
             }
         }
-        if (needle.length() == 0) {
-            return 0;
-        } else if (needle.length() == length) {
-            return index < 0 ? haystack.length() - length : index;
-        } else {
-            return -1;
-        }
+        return length == needle.length() ? index : -1;
     }
 
 }
