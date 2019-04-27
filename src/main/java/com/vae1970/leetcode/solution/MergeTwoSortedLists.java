@@ -1,53 +1,42 @@
 package com.vae1970.leetcode.solution;
 
+import com.vae1970.leetcode.common.ListNode;
+
+import static com.vae1970.leetcode.common.ListNode.toListNode;
+
+/**
+ * Merge Two Sorted Lists
+ *
+ * @author vae
+ */
 public class MergeTwoSortedLists {
 
     public static void main(String[] args) {
-        ListNode l1 = toListNode(new int[]{1, 2, 4});
-        ListNode l2 = toListNode(new int[]{1, 3, 4});
-        mergeTwoLists(l1, l2);
+        ListNode l1 = toListNode(new int[]{1, 5, 6});
+        ListNode l2 = toListNode(new int[]{1, 2, 3});
+        ListNode r = mergeTwoLists(l1, l2);
+        System.out.println(1);
     }
 
     public static ListNode mergeTwoLists(ListNode l1, ListNode l2) {
-        ListNode tempA, tempB;
-        if (l1 == null) {
-            return l2;
+        ListNode result = new ListNode(Integer.MIN_VALUE);
+        ListNode temp = result;
+        while (true) {
+            if (l1 != null && l2 != null) {
+                if (l1.val < l2.val) {
+                    temp.next = l1;
+                    l1 = l1.next;
+                } else {
+                    temp.next = l2;
+                    l2 = l2.next;
+                }
+                temp = temp.next;
+            } else {
+                temp.next = l1 == null ? l2 : l1;
+                break;
+            }
         }
-        if (l2 == null) {
-            return l1;
-        }
-        while (l1.next != null) {
-            tempA = l1.next;
-            l1.next = l2;
-            tempB = l2.next;
-            l2.next = tempA;
-            l2 = tempB;
-        }
-        return l1;
+        return result.next;
     }
 
-    /**
-     * Definition for singly-linked list.
-     */
-    public static class ListNode {
-        int val;
-        ListNode next;
-
-        ListNode(int x) {
-            val = x;
-        }
-    }
-
-    private static ListNode toListNode(int[] array) {
-        if (array.length == 0) {
-            return null;
-        }
-        ListNode listNode = new ListNode(array[0]);
-        ListNode tempListNode = listNode;
-        for (int i = 1, im = array.length; i < im; i++) {
-            tempListNode.next = new ListNode(array[i]);
-            tempListNode = tempListNode.next;
-        }
-        return listNode;
-    }
 }
