@@ -14,7 +14,7 @@ public class ThreeSum {
     public static void main(String[] args) {
 //        System.out.println(newThreeSum(new int[]{}));
 //        System.out.println(newThreeSum(new int[]{-1}));
-//        System.out.println(newThreeSum(new int[]{-1, 0}));
+        System.out.println(newThreeSum(new int[]{-1, 0}));
 //        System.out.println(newThreeSum(new int[]{-1, 0, 1}));
 //        System.out.println(newThreeSum(new int[]{-1, 0, 1, 2}));
 //        System.out.println(newThreeSum(new int[]{-1, 0, 1, 2, -1, -4}));
@@ -25,7 +25,8 @@ public class ThreeSum {
 //        System.out.println(newThreeSum(new int[]{-2, -3, 0, 0, -2}));
 //        System.out.println(newThreeSum(new int[]{3, -2, 1, 0}));
         System.out.println(newThreeSum(new int[]{0, -4, -1, -4, -2, -3, 2}));
-//        System.out.println(newThreeSum(new int[]{6, -5, -6, -1, -2, 8, -1, 4, -10, -8, -10, -2, -4, -1, -8, -2, 8, 9, -5, -2, -8, -9, -3, -5}));
+        System.out.println(newThreeSum(new int[]{6, -5, -6, -1, -2, 8, -1, 4, -10, -8, -10, -2, -4, -1, -8, -2, 8, 9, -5, -2, -8, -9, -3, -5}));
+        System.out.println(newThreeSum(new int[]{1, 1, -2}));
     }
 
     /**
@@ -44,24 +45,18 @@ public class ThreeSum {
 
     public static List<List<Integer>> threeSum(int[] nums) {
         List<List<Integer>> result = new ArrayList<>();
-        if (nums.length < 3) {
-            return result;
-        }
         //  sort first
         sort(nums, 0, nums.length - 1);
         int maxValue = nums[nums.length - 1];
         int temp;
         for (int i = 0; i < nums.length; i++) {
-            if (nums[i] + maxValue < 0) {
-                continue;
-            }
             for (int j = i + 1; j < nums.length; j++) {
-                if (nums[i] + nums[j] + maxValue < 0) {
+                temp = 0 - nums[i] - nums[j];
+                if (temp > maxValue) {
                     continue;
                 }
                 for (int k = j + 1; k < nums.length; k++) {
-                    temp = nums[i] + nums[j] + nums[k];
-                    if (temp == 0) {
+                    if (temp == nums[k]) {
                         int tempIndex = 0;
                         for (; tempIndex < result.size(); tempIndex++) {
                             if (result.get(tempIndex).get(0) == nums[i] && result.get(tempIndex).get(1) == nums[j] && result.get(tempIndex).get(2) == nums[k]) {
@@ -72,7 +67,7 @@ public class ThreeSum {
                             result.add(Arrays.asList(nums[i], nums[j], nums[k]));
                         }
                         break;
-                    } else if (temp > 0) {
+                    } else if (temp < nums[k]) {
                         break;
                     }
                 }
