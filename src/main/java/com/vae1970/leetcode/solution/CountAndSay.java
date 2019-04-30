@@ -14,28 +14,26 @@ public class CountAndSay {
 
     public static String countAndSay(int n) {
         StringBuilder sb = new StringBuilder();
-        int old = -1;
-        int temp;
-        int count = 0;
-        while (true) {
-            temp = n / 10;
-            if (temp == 0) {
-                temp = n;
-            }
+        int[] array = new int[10];
+        int length = 0;
+        while (n != 0) {
+            array[length++] = n % 10;
             n /= 10;
-            if (old == temp) {
+        }
+        int count = 0;
+        int i = length - 1;
+        int temp = array[i] + 1;
+        for (; i >= 0; i--) {
+            if (array[i] == temp) {
                 count++;
             } else {
                 sb.append(count);
-                sb.append(old);
+                sb.append(temp);
                 count = 1;
-                old = temp;
-                if (n == 0) {
-                    break;
-                }
+                temp = array[i];
             }
         }
-        return sb.substring(2, sb.length());
+        return sb.substring(0, sb.length());
     }
 
 }
