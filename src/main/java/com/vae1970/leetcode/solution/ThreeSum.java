@@ -62,7 +62,6 @@ public class ThreeSum {
 		int[] repeat = process[1];
 		result.addAll(processRepeat(distinct, repeat));
 		int length = distinct[distinct.length - 1];
-		int cycleCount = 0;
 		if (length > 0) {
 			int maxValue = distinct[length - 1];
 			int temp;
@@ -72,19 +71,26 @@ public class ThreeSum {
 					if (temp > maxValue) {
 						continue;
 					}
-					for (int k = j + 1; k < length; k++) {
-						cycleCount++;
+					int middle = (length - j) / 2;
+					int k = j + middle;
+					while (true) {
+						if (middle == 0 || (middle == 1 && ((temp < distinct[k] && temp > distinct[k - 1]) || (temp > distinct[k] && temp < distinct[k + 1])))) {
+							break;
+						}
 						if (temp == distinct[k]) {
 							result.add(Arrays.asList(distinct[i], distinct[j], distinct[k]));
 							break;
 						} else if (temp < distinct[k]) {
-							break;
+							middle = middle == 1 && k - j - 1 > 0 ? middle : middle / 2;
+							k -= middle;
+						} else {
+							middle = middle == 1 && length - k > 0 ? middle : middle / 2;
+							k += middle;
 						}
 					}
 				}
 			}
 		}
-		System.out.println("count: " + cycleCount);
 		return result;
 	}
 
