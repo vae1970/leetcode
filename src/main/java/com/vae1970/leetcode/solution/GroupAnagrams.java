@@ -17,6 +17,7 @@ public class GroupAnagrams {
     }
 
     public static List<List<String>> groupAnagrams(String[] strs) {
+
         List<List<String>> result = new ArrayList<>();
         boolean empty = false;
         List<Long> hashArray = new ArrayList<>();
